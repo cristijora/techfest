@@ -90,8 +90,11 @@ var Authentication = function(db){
         self.emit('authenticated',authResult);
         self.emit('completed',authResult);
         if(continueWith){
-
-            continueWith(null,authResult)
+            var response={
+                success:authResult.success,
+                message:authResult.message
+            }
+            continueWith(null,response)
         }
     };
 
@@ -101,7 +104,11 @@ var Authentication = function(db){
         self.emit('not-authenticated',authResult);
         self.emit('completed',authResult);
         if(continueWith){
-            continueWith(null,authResult)
+            var response={
+                success:authResult.success,
+                message:authResult.message
+            }
+            continueWith(null,response)
         }
     };
 

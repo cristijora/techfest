@@ -21,13 +21,14 @@ connect(function (database) {
 initAppPlugins(app);
 
 
-app.listen(7500, function () {
-    console.log("stareted on port 7500")
+app.listen(5000, function () {
+    console.log("stareted on port 5000")
 });
 
 app.get("/", function (req, res) {
     res.status(200).json("Hello")
 });
+
 
 emitter.on("connected",function(){
     registerMembershipRoutes(app,db);
