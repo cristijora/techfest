@@ -28,8 +28,10 @@ function registerMembershipRoutes(app,db){
     });
 
     function saveUser(res, requestBody, body) {
+        if(!db) res.status(400).json("Database error");
         var membership = new Membership(db);
         var custom_data = JSON.parse(body);
+
         membership.register(requestBody.email, requestBody.password, requestBody.confirm, custom_data, (err, result)=> {
             var response = {
                 success: result.success,
@@ -46,6 +48,7 @@ function registerMembershipRoutes(app,db){
 
     app.post("/login", function (req, res) {
         var body = req.body;
+        if(!db) res.status(400).json("Database error");
         if (body.email && body.password) {
             var membership = new Membership(db);
             membership.authenticate(body.email, body.password, function(err, result) {
@@ -68,7 +71,7 @@ function registerMembershipRoutes(app,db){
 
         }
         else {
-            res.status(400);
+            res.status(400).json("No email or password provided");
         }
     })
 }

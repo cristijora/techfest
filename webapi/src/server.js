@@ -1,7 +1,5 @@
 var express = require('express');
 var app = express();
-require("babel-polyfill");
-var request = require('request');
 var registerMembershipRoutes =require('./routes/registration');
 var initAppPlugins = require('./plugins');
 var connect = require('./dbconnect');
@@ -10,29 +8,30 @@ var events=require('events');
 var util=require('util');
 
 var emitter = new events.EventEmitter();
+
 var db = null;
-connect(function (database) {
+connect(function (database) {  //connect to the database and emmit events
     db = database;
     emitter.emit("connected")
 }, function (err) {
-    console.log(err);
-    emitter.emit("connection-failed")
+    emitter.emit("connection-failed",err)
 });
-initAppPlugins(app);
 
-
-app.listen(5000, function () {
-    console.log("stareted on port 5000")
-});
+initAppPlugins(app); //Initialize server start and set access control headers
 
 app.get("/", function (req, res) {
     res.status(200).json("Hello")
 });
 
-
-emitter.on("connected",function(){
+emitter.on("connected",function(){  //Listen for database connect events
     registerMembershipRoutes(app,db);
 });
+
+emitter.on("connection-failed",function(err){
+    registerMembershipRoutes(app,db);
+    console.log(err);
+});
+
 
 
 
