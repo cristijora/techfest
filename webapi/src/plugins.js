@@ -11,8 +11,8 @@ function initAppPlugins(app){
         next();
     });
     app.use(bodyParser.json());
-    app.listen(7000, function () {
-        console.log("stareted on port 7000")
+    app.listen(5000, function () {
+        console.log("stareted on port 5000")
     });
 }
 

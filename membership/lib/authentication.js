@@ -92,7 +92,10 @@ var Authentication = function(db){
         if(continueWith){
             var response={
                 success:authResult.success,
-                message:authResult.message
+                message:authResult.message,
+                user:{
+                    custom_data:authResult.user.custom_data
+                }
             }
             continueWith(null,response)
         }
@@ -106,7 +109,7 @@ var Authentication = function(db){
         if(continueWith){
             var response={
                 success:authResult.success,
-                message:authResult.message
+                message:authResult.message,
             }
             continueWith(null,response)
         }
