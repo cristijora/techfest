@@ -2,13 +2,13 @@
  * Created by cristian.jora on 12.10.2016.
  */
 var request = require('request');
-function getHeartRates(access_token,successCallback,errorCallback){
+function getActivity(access_token,activityType,successCallback,errorCallback){
     if(access_token){
         var headers = {
             'Authorization': `Bearer ${access_token}`
         };
         var options = {
-            url: 'https://api.fitbit.com/1/user/-/activities/heart/date/2016-10-11/1d.json',
+            url: `https://api.fitbit.com/1/user/-/activities/${activityType}/date/today/1m.json`,
             method: 'GET',
             headers: headers,
         };
@@ -16,8 +16,10 @@ function getHeartRates(access_token,successCallback,errorCallback){
             var responseBody=JSON.parse(body);
             if (!error && response.statusCode == 200) {
                 // Print out the response body
-                successCallback(responseBody);
+                var property=`activities-${activityType}`
+                successCallback(responseBody[property]);
             }
+
             else{
                 errorCallback(responseBody)
             }
@@ -29,4 +31,4 @@ function getHeartRates(access_token,successCallback,errorCallback){
 
 }
 
-module.exports=getHeartRates;
+module.exports=getActivity;

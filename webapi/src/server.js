@@ -1,35 +1,32 @@
 var express = require('express');
 var app = express();
-var registerMembershipRoutes =require('./routes/registration');
-var initAppPlugins = require('./plugins');
-var connect = require('./dbconnect');
 
-var events=require('events');
-var util=require('util');
+//app middleware
+var accessControlHeaders = require('./middleware/plugins').accessControlHeaders;
+var logger = require('./middleware/logs/logger')
+var bodyParser =require('body-parser');
+var db =require('./middleware/db').database;
 
-var emitter = new events.EventEmitter();
+//routes
+var authRoutes =require('./routes/registration');
+var fitbitRoutes =require('./routes/fitbit');
 
-var db = null;
-connect(function (database) {  //connect to the database and emmit events
-    db = database;
-    emitter.emit("connected")
-}, function (err) {
-    emitter.emit("connection-failed",err)
+//initialize app middleware. The argument functions will get executed before every request
+app.use(bodyParser.json());
+app.use(accessControlHeaders)
+app.use(db);
+app.use(logger);
+
+//Initialize server. This is binded to http://kairyapi.corebuild.eu
+app.listen(8082, function () {
+    console.log("stareted on port 8082")
 });
 
-initAppPlugins(app); //Initialize server start and set access control headers
+app.use(authRoutes)
+app.use(fitbitRoutes)
 
 app.get("/", function (req, res) {
     res.status(200).json("Hello")
-});
-
-emitter.on("connected",function(){  //Listen for database connect events
-    registerMembershipRoutes(app,db);
-});
-
-emitter.on("connection-failed",function(err){
-    registerMembershipRoutes(app,db);
-    console.log(err);
 });
 
 

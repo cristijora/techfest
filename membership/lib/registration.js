@@ -37,7 +37,6 @@ var Registration = function(db){
     };
 
     var checkIfUserExists=function(app){
-        console.log(app.email, " search by email");
         db.collection("users").findOne({email:app.email},function(err,result){
           if(result){
               app.setInvalid('This email is already taken');

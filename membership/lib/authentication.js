@@ -94,7 +94,8 @@ var Authentication = function(db){
                 success:authResult.success,
                 message:authResult.message,
                 user:{
-                    custom_data:authResult.user.custom_data
+                    custom_data:authResult.user.custom_data,
+                    userId:authResult.user.id
                 }
             }
             continueWith(null,response)
@@ -110,12 +111,11 @@ var Authentication = function(db){
             var response={
                 success:authResult.success,
                 message:authResult.message,
+
             }
             continueWith(null,response)
         }
     };
-
-
     //happy
     this.on('login-received',validateCredentials);
     this.on('creds-ok',findUser);

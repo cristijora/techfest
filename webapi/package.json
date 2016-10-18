@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "babel-watch src/server.js --presets es2015,stage-2"
+    "dev": "babel-watch src/server.js --presets es2015,stage-2",
+    "build": "babel src --presets babel-preset-es2015 --out-dir dist"
   },
   "author": "",
   "license": "ISC",
@@ -13,12 +14,11 @@
     "babel-watch": "^2.0.3"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "membership": "file:../membership",
     "mongodb": "^2.2.10",
-    "mongoose": "^4.6.3",
-    "request": "^2.75.0",
-    "body-parser": "^1.15.2",
-    "body-parser-json": "^1.9.2",
-    "express": "^4.14.0"
+    "morgan": "^1.7.0",
+    "request": "^2.75.0"
   }
 }
