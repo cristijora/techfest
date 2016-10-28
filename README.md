@@ -8,10 +8,10 @@ Installation
 
 #### Download:
 
-Download from BitBucket
+Clone the repository
 
 ```
-git clone https://bitbucket.org/cristijora93/kairy
+git clone http://git.corebuild.eu/Kairy/backend.git
 ```
 
 #### Requirements:
@@ -26,9 +26,6 @@ git clone https://bitbucket.org/cristijora93/kairy
 # Go to membership folder and install dependencies
 
 npm install
-
-# build membership module
-npm run build
 
 # Go to webapi folder and install dependencies
 npm install
