@@ -1,8 +1,6 @@
 /**
  * Created by cristian.jora on 28.09.2016.
  */
-var User =require('./models/user');
-var Log =require('./models/log');
 var Application =require('./models/application');
 var guid =require('guid');
 var bcrypt =require('bcrypt-nodejs');
@@ -21,7 +19,6 @@ var Registration = function(db){
     var self=this;
     Emitter.call(this);//pass this to event emitter so events can be used from this
     var continueWith=null;
-    var database=db;
     var validateInputs=function(app){
         if(!app.email || !app.password){
             app.setInvalid("Email and password are required");
@@ -37,7 +34,8 @@ var Registration = function(db){
     };
 
     var checkIfUserExists=function(app){
-        db.collection("users").findOne({email:app.email},function(err,result){
+        var user=db.models.user;
+        user.findOne({email:app.email},function(err,result){
           if(result){
               app.setInvalid('This email is already taken');
               self.emit('invalid',app)
@@ -49,11 +47,12 @@ var Registration = function(db){
 
     var saveUser=function(app){
         var newGuid=guid.create().value;
-        var user=new User(app);
+        var UserModel=db.models.user;
+        var user=new UserModel(app);
         user.id=newGuid;
         user.signInCount=1;
-        user.hashedPassword=bcrypt.hashSync(user.password);
-        db.collection("users").save(user,function(err,result){
+        user.hashedPassword=bcrypt.hashSync(app.password);
+        user.save(function(err,result){
           if(result){
               app.user=user;
               self.emit('user-created',app)
@@ -66,13 +65,14 @@ var Registration = function(db){
 
     var addLogEntry=function(app){
         console.log("User ID ",app.user);
-        var log=new Log({
+        var LogModel=db.models.log;
+        var log=new LogModel({
             subject:"Registration",
             userId:app.user.id,
             entry: "Successfully Registered"
         });
         log.id=guid.create().value;
-        db.collection("logs").save(log,function(err,result){
+        log.save(function(err,result){
            if(result){
                app.log=result;
                self.emit('log-created',app)

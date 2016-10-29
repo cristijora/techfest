@@ -19,7 +19,7 @@ var Membership = function(db){
         });
         auth.authenticate({email:email,password:password},next)
     };
-    this.register=function(email,password,confirm,custom_data,next){
+    this.register=function(user,next){
         var reg=new Registration(db);
         reg.on('registered',function(authResult){
             self.emit('registered',authResult)
@@ -27,7 +27,7 @@ var Membership = function(db){
         reg.on('not-registered',function(authResult){
             self.emit('not-registered',authResult)
         });
-        reg.applyForMembership({email:email,password:password,confirm:confirm,custom_data:custom_data},next)
+        reg.applyForMembership(user,next)
     }
 };
 
