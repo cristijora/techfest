@@ -3,6 +3,7 @@
  */
 var settings=[
     {checked:false,name:'Calendar View & Calendar data to track'},
+    {checked:false,name:'Mood data'},
     {checked:false,name:'Wristband data '},
     {checked:false,name:'Medication data '},
     {checked:false,name:'Weather data '},

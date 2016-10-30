@@ -10,6 +10,7 @@ db.connect("mongodb://localhost:27017/test");
 //routes
 var authRoutes =require('./routes/registration');
 var userRoutes =require('./routes/settings');
+var moodRoutes =require('./routes/mood');
 
 //initialize app middleware. The argument functions will get executed before every request
 app.use(bodyParser.json());
@@ -27,6 +28,7 @@ app.listen(8082, function () {
 
 app.use(authRoutes)
 app.use("/user",userRoutes)
+app.use("/user",moodRoutes)
 
 app.get("/", function (req, res) {
     res.status(200).json("Hello");

@@ -34,7 +34,7 @@ var UserSettings = function(db){
     }
 
     var updateUserSettings=function(app){
-        userModel.findOneAndUpdate({id:app.userId},{settings:app.settings},function(err,result){
+        userModel.findOneAndUpdate({id:app.userId},{$set:{settings:app.settings}},{new:true},function(err,result){
             if(err || !result){
                 app.setInvalid("Could not find the user in the database")
                 self.emit("invalid",app);

@@ -8,10 +8,12 @@ var Application = function(args){
 
     var app={};
     app.userId=args.userId;
+    app.mood=args.mood;
     app.settings=args.settings;
     app.user=null;
     app.status="pending";
     app.message=null;
+    app.results=args.results;
     app.isValid=function(){
         return app.status=="validated"
     };

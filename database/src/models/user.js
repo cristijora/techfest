@@ -5,10 +5,10 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-    id:  String,
-    email: String,
-    username: String,
-    hashedPassword: String,
+    id:  {type:String,required:true},
+    email: {type:String,required:true},
+    username: {type:String,required:true},
+    hashedPassword: {type:String,required:true},
     authenticationToken: String,
     createdAt: Date,
     lastLoginAt: Date,

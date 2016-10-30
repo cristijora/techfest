@@ -90,15 +90,10 @@ var Authentication = function(db){
         self.emit('authenticated',authResult);
         self.emit('completed',authResult);
         if(continueWith){
-            var response={
-                success:authResult.success,
-                message:authResult.message,
-                user:{
-                    custom_data:authResult.user.custom_data,
-                    userId:authResult.user.id
-                }
-            }
-            continueWith(null,response)
+            authResult.user.hashedPassword=null; //don't send the hashed password
+            delete authResult.log; //don't send the hashed password
+            delete authResult.creds; //don't send the hashed password
+            continueWith(null,authResult)
         }
     };
 

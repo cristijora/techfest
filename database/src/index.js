@@ -1,10 +1,20 @@
 /**
  * Created by cristian.jora on 28.10.2016.
  */
+var mongoose = require('mongoose');
+
+//models
 var user = require('./models/user');
 var log = require('./models/log');
-var mongoose = require('mongoose');
+var mood = require('./models/mood');
+
+//utils
 var settings = require('./models/settings')
+var moodTypes = require('./models/enum/moodTypes')
+var eventTypes = require('./models/enum/eventTypes')
+var eventFrequency = require('./models/enum/eventFrequency')
+
+
 function connect(connectionString,callback){
     if(!connectionString){
         console.error("Error connecting to db")
@@ -32,9 +42,13 @@ module.exports={
     disconnect,
     models:{
       user,
-      log
+      log,
+      mood
     },
     utils:{
-        userDefaultSettings:settings
+        userDefaultSettings:settings,
+        moodTypes,
+        eventTypes,
+        eventFrequency
     }
 };

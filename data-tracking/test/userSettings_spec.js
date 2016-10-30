@@ -67,7 +67,7 @@ describe("User settings",function(){
     var settingsResult={};
     before(function(done){
       var userId="e821e091-642a-c3d4-38a6-f134ebed7031";
-      userSettings.getUserSettings(userId,function(err,result){
+      userSettings.getPagedMood(userId,function(err, result){
         settingsResult=result;
         done();
       })
