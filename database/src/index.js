@@ -4,8 +4,8 @@
 var user = require('./models/user');
 var log = require('./models/log');
 var mongoose = require('mongoose');
-
-function connect(connectionString){
+var settings = require('./models/settings')
+function connect(connectionString,callback){
     if(!connectionString){
         console.error("Error connecting to db")
         return;
@@ -13,15 +13,28 @@ function connect(connectionString){
     console.log(connectionString)
     mongoose.connect(connectionString);
     var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
+    db.on('error', function(){
+        console.log("error db");
+        console.error.bind(console, 'connection error');
+        if(callback) callback("connection error",null)
+
+    });
     db.once('open', function() {
         console.log("Connection to mongoose opened");
+        if(callback) callback(null,"Successful db connection")
     });
+}
+function disconnect(){
+    mongoose.disconnect();
 }
 module.exports={
     connect,
+    disconnect,
     models:{
       user,
       log
+    },
+    utils:{
+        userDefaultSettings:settings
     }
 };

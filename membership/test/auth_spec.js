@@ -1,9 +1,9 @@
 // /**
 //  * Created by cristian.jora on 29.09.2016.
 //  */
-// import Authentication from './../lib/authentication'
+// import UserSettings from './../lib/authentication'
 // import mongodb from 'mongodb'
-// describe('Authentication',function(){
+// describe('UserSettings',function(){
 //     var reg={};
 //     var auth={};
 //     var database=null;
@@ -11,7 +11,7 @@
 //         var MongoClient = mongodb.MongoClient;
 //         var url = 'mongodb://localhost:27017/Fitbit';
 //         MongoClient.connect(url, function(err, db) {
-//             auth=new Authentication(db);
+//             auth=new UserSettings(db);
 //             database=db;
 //             done();
 //         });

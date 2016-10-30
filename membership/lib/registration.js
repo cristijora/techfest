@@ -52,6 +52,7 @@ var Registration = function(db){
         user.id=newGuid;
         user.signInCount=1;
         user.hashedPassword=bcrypt.hashSync(app.password);
+        user.settings=db.utils.userDefaultSettings;
         user.save(function(err,result){
           if(result){
               app.user=user;

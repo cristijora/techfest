@@ -2,37 +2,43 @@
  * Created by cristian.jora on 28.09.2016.
  */
 import Registration from './../lib/registration'
-import mongodb from 'mongodb'
-describe("Registration",function(){
+var db = require('database')
+var should = require('should')
+describe("SettingsModule",function(){
    var reg={};
    var database=null;
    before(function(done){
-       var MongoClient = mongodb.MongoClient;
-       var url = 'mongodb://localhost:27017/Fitbit';
-       MongoClient.connect(url, function(err, db) {
-           reg=new Registration(db);
+       db.connect("mongodb://localhost:27017/testdb",function(err,result){
+           if(err) {
+               console.log("Error connecting to the database")
+               done();
+           }
+
+           reg=new Registration(db)
            database=db;
            done();
        });
    });
 
-    after(function(done){
-        database.close();
-        done();
-    });
+   after(function(done){
+       db.disconnect();
+       console.log("Db connection closed");
+       done();
+   })
 
   describe('a valid application',function(){
     var regResult={};
     before(function(done){
-        reg.applyForMembership({email:"joracristic@gmail.com",password:"test",confirm:"test",custom_data:"some custom data"},function(err,result){
+        var user={email:"joracristi4@gmail.com",password:"test",confirm:"test",custom_data:"some custom data"};
+        reg.applyForMembership(user,function(err,result){
+            console.log(result,"------------");
+
           regResult=result;
-            database.close();
           done();
         })
     });
 
     it('is successful',function(){
-        console.log(regResult.success," Result in is succesfull method");
         regResult.success.should.equal(true);
     });
     it('creates a user',function(){
