@@ -23,11 +23,39 @@ app.use(function(req,res,next){
 app.use(logger);
 
 //Initialize server. This is binded to http://kairyapi.corebuild.eu
-app.listen(8082, function () {
-    console.log("stareted on port 8082")
+app.listen(3000, function () {
+    console.log("stareted on port 3000")
 });
 
-app.use(authRoutes)
+app.use(authRoutes);
+
+app.use(function(req, res, next){
+    var token = req.headers['x-access-token'];
+    if(token){
+        jwt.verify(token,"test", function(err, decoded){
+            if(err){
+                return res.json({
+                    success: false,
+                    message: 'Failed to authenticate token '
+                });
+            }
+            else{
+                req.decoded = decoded;
+                req.userId=decoded.id;
+                next();
+
+            }
+        })
+    }
+    else{
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+    }
+});
+
+
 app.use("/user",userRoutes)
 app.use("/user",moodRoutes)
 app.use("/behaviour",behaviourRoutes)

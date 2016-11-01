@@ -1,12 +1,4 @@
-/**
- * Created by cristian.jora on 30.10.2016.
- */
-/**
- * Created by cristian.jora on 30.10.2016.
- */
-/**
- * Created by cristian.jora on 12.10.2016.
- */
+
 var express = require('express');
 var router = express.Router();
 var db=null;
@@ -21,7 +13,7 @@ router.use(function(req,res,next){
 })
 
 router.get("/mood", function (req, res) {
-    var userId=req.query.userId
+    var userId=req.userId;
     if (!userId) {
         res.status(400).json({message:"User id is required"});
     }

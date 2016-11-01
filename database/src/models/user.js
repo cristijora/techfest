@@ -10,7 +10,7 @@ var userSchema = new Schema({
     email: {type:String,required:true},
     username: {type:String,required:true},
     hashedPassword: {type:String,required:true},
-    authenticationToken: String,
+    token: String,
     createdAt: Date,
     lastLoginAt: Date,
     signInCount: Number,

@@ -9,8 +9,8 @@ router.use(function (req, res, next) {
     db = req.db;
     next();
 });
-
 router.get("/users", function (req, res) {
+    req.userId
     if (!db) res.status(400).json("Database error");
     db.collection("users").find().toArray(function (err, result) {
         if (result.success) {
@@ -31,6 +31,5 @@ router.post("/setData", function(req,res)
         if(err) res.status(401).json(err);
         res.status(200).json(result);
     })
-
 });
 module.exports = router;

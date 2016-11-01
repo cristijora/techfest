@@ -20,6 +20,7 @@ var Registration = function(db){
     Emitter.call(this);//pass this to event emitter so events can be used from this
     var continueWith=null;
     var validateInputs=function(app){
+        console.log(app)
         if(!app.email || !app.password){
             app.setInvalid("Email and password are required");
             self.emit("invalid",app);

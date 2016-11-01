@@ -18,7 +18,6 @@ router.post("/register", function (req, res) {
     if (!req.body.email && !req.body.password && !req.body.confirm) {
         res.status(400).json("Email, password and confirm are mandatory");
     }
-    console.log(req);
     saveUser(res, req.body)
 });
 
@@ -28,8 +27,9 @@ router.post("/login", function (req, res) {
     if (body.email && body.password) {
         var membership = new Membership(db);
         membership.authenticate(body.email, body.password, function (err, result) {
+            console.log(result);
             if (result.success) {
-                res.status(200).json(result);
+               res.status(200).json(result);
             }
             else {
                 res.status(400).json(result);
@@ -43,6 +43,7 @@ router.post("/login", function (req, res) {
 function saveUser(res, requestBody) {
     if (!db) res.status(400).json("Database error");
     var membership = new Membership(db);
+
     membership.register(requestBody, (err, result)=> {
         var response = {
             success: result.success,
