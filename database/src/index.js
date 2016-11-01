@@ -15,6 +15,7 @@ var moodTypes = require('./models/enum/moodTypes')
 var eventTypes = require('./models/enum/eventTypes')
 var eventFrequency = require('./models/enum/eventFrequency')
 
+var error='';
 
 function connect(connectionString,callback){
     if(!connectionString){
@@ -27,6 +28,7 @@ function connect(connectionString,callback){
     db.on('error', function(){
         console.log("error db");
         console.error.bind(console, 'connection error');
+        error='database connection error';
         if(callback) callback("connection error",null)
 
     });
@@ -47,6 +49,7 @@ module.exports={
       mood,
       behaviour
     },
+    error:error,
     utils:{
         userDefaultSettings:settings,
         moodTypes,

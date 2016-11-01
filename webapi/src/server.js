@@ -20,14 +20,19 @@ app.use(bodyParser.json());
 app.use(accessControlHeaders)
 app.use(base_url)
 app.use(function(req,res,next){
+    if(db.error) return res.status(500).json(db.error)
     req.db=db;
     next();
 });
 app.use(logger);
 app.use(cors())
+
 //Initialize server. This is binded to http://kairyapi.corebuild.eu
 app.listen(8082, function () {
     console.log("stareted on port 8082")
+});
+app.get("/", function (req, res) {
+    res.status(200).json("Hello");
 });
 
 app.use(authRoutes);
@@ -37,6 +42,3 @@ app.use("/user",userRoutes)
 app.use("/user",moodRoutes)
 app.use("/behaviour",behaviourRoutes)
 
-app.get("/", function (req, res) {
-    res.status(200).json("Hello");
-});

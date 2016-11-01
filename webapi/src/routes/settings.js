@@ -6,51 +6,44 @@
  */
 var express = require('express');
 var router = express.Router();
-var db=null;
+var db = null;
 //helpers
 var DataTracking = require('data-tracking');
-var dataTracking=null;
+var dataTracking = null;
 
-router.use(function(req,res,next){
-    db=req.db;
-    dataTracking=new DataTracking(db);
+router.use(function (req, res, next) {
+    db = req.db;
+    dataTracking = new DataTracking(db);
     next();
 })
 
 router.get("/settings", function (req, res) {
-    var userId=req.userId
-    if (!userId) {
-        res.status(400).json({message:"User id is required"});
-    }
-    else{
-        dataTracking.getUserSettings(userId,function (err, result) {
-            if(result.success){
-                res.status(200).json(result.user)
-            }
-            else{
-                res.status(400).json(result.message);
-            }
-        });
-    }
+    var userId = req.userId;
+    dataTracking.getUserSettings(userId, function (err, result) {
+        if (result.success) {
+            res.status(200).json(result.user)
+        }
+        else {
+            res.status(400).json(result.message);
+        }
+    })
 })
 
 router.post("/settings/update", function (req, res) {
-    if (!req.userId && !req.body.settings) {
-        res.status(400).json({message:"User id and settings values are required!"});
+    if (!req.body.settings) {
+        res.status(400).json({message: "Settings values are required!"});
     }
-    else{
-        dataTracking.updateSettings(req.body,function (err, result) {
-            if(result.success){
+    else {
+        dataTracking.updateSettings(req.body, function (err, result) {
+            if (result.success) {
                 res.status(200).json(result.user.settings)
             }
-            else{
+            else {
                 res.status(400).json(result.message);
             }
         });
     }
 });
-
-
 
 
 module.exports = router;

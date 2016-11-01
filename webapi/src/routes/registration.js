@@ -23,7 +23,6 @@ router.post("/register", function (req, res) {
 
 router.post("/login", function (req, res) {
     var body = req.body;
-    if (!db) res.status(400).json("Database error");
     if (body.email && body.password) {
         var membership = new Membership(db);
         membership.authenticate(body.email, body.password, function (err, result) {
@@ -40,7 +39,6 @@ router.post("/login", function (req, res) {
     }
 })
 function saveUser(res, requestBody) {
-    if (!db) res.status(400).json("Database error");
     var membership = new Membership(db);
 
     membership.register(requestBody, (err, result)=> {
