@@ -2,6 +2,7 @@
  * Created by cristian.jora on 28.10.2016.
  */
 var mongoose = require('mongoose')
+var mongoosePaginate = require('mongoose-paginate');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
@@ -14,8 +15,9 @@ var userSchema = new Schema({
     lastLoginAt: Date,
     signInCount: Number,
     custom_data:Schema.Types.Mixed,
-    settings:Schema.Types.Mixed,
+    settings:{type:Schema.Types.Mixed,required:true},
 });
 
+userSchema.plugin(mongoosePaginate);
 var user=mongoose.model("User",userSchema);
 module.exports=user;

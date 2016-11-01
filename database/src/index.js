@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var user = require('./models/user');
 var log = require('./models/log');
 var mood = require('./models/mood');
+var behaviour = require('./models/behaviour');
 
 //utils
 var settings = require('./models/settings')
@@ -43,7 +44,8 @@ module.exports={
     models:{
       user,
       log,
-      mood
+      mood,
+      behaviour
     },
     utils:{
         userDefaultSettings:settings,
