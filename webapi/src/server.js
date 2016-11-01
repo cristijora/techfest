@@ -1,8 +1,10 @@
 var express = require('express');
 var app = express();
-
+var cors=require('cors');
 //app middleware
 var accessControlHeaders = require('./middleware/plugins').accessControlHeaders;
+var base_url = require('./middleware/plugins').base_url;
+var tokenVerification = require('./middleware/plugins').tokenVerification;
 var logger = require('./middleware/logs/logger')
 var bodyParser =require('body-parser');
 var db = require('database')
@@ -16,45 +18,20 @@ var behaviourRoutes =require('./routes/behaviour');
 //initialize app middleware. The argument functions will get executed before every request
 app.use(bodyParser.json());
 app.use(accessControlHeaders)
+app.use(base_url)
 app.use(function(req,res,next){
     req.db=db;
     next();
 });
 app.use(logger);
-
+app.use(cors())
 //Initialize server. This is binded to http://kairyapi.corebuild.eu
-app.listen(3000, function () {
-    console.log("stareted on port 3000")
+app.listen(8082, function () {
+    console.log("stareted on port 8082")
 });
 
 app.use(authRoutes);
-
-app.use(function(req, res, next){
-    var token = req.headers['x-access-token'];
-    if(token){
-        jwt.verify(token,"test", function(err, decoded){
-            if(err){
-                return res.json({
-                    success: false,
-                    message: 'Failed to authenticate token '
-                });
-            }
-            else{
-                req.decoded = decoded;
-                req.userId=decoded.id;
-                next();
-
-            }
-        })
-    }
-    else{
-        return res.status(403).send({
-            success: false,
-            message: 'No token provided.'
-        });
-    }
-});
-
+app.use(tokenVerification);
 
 app.use("/user",userRoutes)
 app.use("/user",moodRoutes)

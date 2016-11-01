@@ -16,6 +16,7 @@ var db=null;
 //helpers
 var DataTracking = require('data-tracking');
 var dataTracking=null;
+require('url')
 
 router.use(function(req,res,next){
     db=req.db;
@@ -24,9 +25,7 @@ router.use(function(req,res,next){
 })
 
 router.get("/", function (req, res) {
-    console.log(req.query);
-
-    var userId=req.query.userId
+    var userId=req.userId
     if (!userId) {
         res.status(400).json({message:"User id is required"});
     }
@@ -39,6 +38,11 @@ router.get("/", function (req, res) {
         }
         dataTracking.getPagedEntities(args,function (err, result) {
             if(result.success){
+                page=parseInt(page);
+                var next_page=page<result.result.total_pages?(page+1):page;
+                var prev_page=page<=1?result.result.total_pages:page-1;
+                result.result.prev_page_url=req.base_url+'?userId='+userId+'&page='+prev_page;
+                result.result.next_page_url=req.base_url+'?userId='+userId+'&page='+next_page;
                 res.status(200).json(result.result)
             }
             else{
@@ -49,9 +53,7 @@ router.get("/", function (req, res) {
 })
 
 router.post("/", function (req, res) {
-    console.log(req.body);
-
-    if (!req.body.userId && !req.body.behaviour) {
+    if (!req.userId && !req.body.behaviour) {
         res.status(400).json({message:"User id and behaviour values are required!"});
     }
     else{
@@ -68,7 +70,8 @@ router.post("/", function (req, res) {
                 if(!result.success){
                     res.status(400).json(result.message);
                 }else{
-                    res.status(200).json(result.result);
+
+                    res.status(200).json(result);
                 }
             }
         })

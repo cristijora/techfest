@@ -27,7 +27,6 @@ router.post("/login", function (req, res) {
     if (body.email && body.password) {
         var membership = new Membership(db);
         membership.authenticate(body.email, body.password, function (err, result) {
-            console.log(result);
             if (result.success) {
                res.status(200).json(result);
             }

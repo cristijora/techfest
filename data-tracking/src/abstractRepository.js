@@ -170,12 +170,26 @@ var AbstractRepository = function(db){
         if(!page){
             page=1
         }
-        model.paginate(query,{page:page,limit:5},function(err,result){
+        var limit=5;
+        model.paginate(query,{page:page,limit:limit},function(err,result){
             if(err || !result){
                 getDataFail(app);
             }
             else{
-                app.result=result;
+                var from=(page-1<1)?1:(page-1)*limit;
+                var finalResult={
+                    per_page:limit,
+                    from:from,
+                    to:page*limit,
+                    prev_page_url:'',
+                    next_page_url:'',
+                    last_page:page-1<1?result.pages:page-1,
+                    data:result.docs,
+                    total:result.total,
+                    current_page:parseInt(result.page),
+                    total_pages:result.pages
+                }
+                app.result=finalResult;
                 getDataSuccess(app);
             }
         })

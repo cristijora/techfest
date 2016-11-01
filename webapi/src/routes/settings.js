@@ -18,7 +18,7 @@ router.use(function(req,res,next){
 })
 
 router.get("/settings", function (req, res) {
-    var userId=req.query.userId
+    var userId=req.userId
     if (!userId) {
         res.status(400).json({message:"User id is required"});
     }
@@ -35,7 +35,7 @@ router.get("/settings", function (req, res) {
 })
 
 router.post("/settings/update", function (req, res) {
-    if (!req.body.userId && !req.body.settings) {
+    if (!req.userId && !req.body.settings) {
         res.status(400).json({message:"User id and settings values are required!"});
     }
     else{

@@ -30,8 +30,6 @@ var Mood = function(db){
             self.emit("data-ok",app)
         }
         else{
-            console.log(app);
-
             app.setInvalid("Invalid data or userId is not present")
             self.emit('invalid',app)
         }
@@ -149,8 +147,6 @@ var Mood = function(db){
             getPagedMoodFail(app);
         }
         moodModel.paginate({userId:args.userId},{page:page,limit:10},function(err,result){
-            console.log(result);
-
             if(err || !result){
                 getPagedMoodFail(app);
             }

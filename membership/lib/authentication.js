@@ -64,7 +64,6 @@ var Authentication = function (db) {
     //bump the stats
     var updateUserStats = function (authResult) {
         var user = authResult.user;
-        console.log("tokem:"+ user.token)
         user.signInCount += 1;
         user.lastLoginAt = new Date();
         var updates = {

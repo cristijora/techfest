@@ -34,7 +34,7 @@ router.get("/mood", function (req, res) {
 })
 
 router.post("/mood/update", function (req, res) {
-    if (!req.body.userId && !req.body.mood) {
+    if (!req.userId && !req.body.mood) {
         res.status(400).json({message:"User id and settings values are required!"});
     }
     else{
