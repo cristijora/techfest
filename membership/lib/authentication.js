@@ -3,8 +3,6 @@
  */
 var Emitter=require('events').EventEmitter;
 var util=require('util');
-var User =require('./models/user');
-var Log= require('./models/log');
 var bcrypt= require('bcrypt-nodejs');
 var guid= require('guid');
 
@@ -34,9 +32,10 @@ var Authentication = function(db){
     };
     //find user
     var findUser=function(authResult){
-        db.collection("users").findOne({email:authResult.creds.email},function(err,result){
+        var UserModel=db.models.user;
+        UserModel.findOne({email:authResult.creds.email},function(err,result){
           if(result){
-              authResult.user=new User(result);
+              authResult.user=new UserModel(result);
               self.emit('user-found',authResult)
           }
           else{
@@ -68,13 +67,14 @@ var Authentication = function(db){
     };
 
     var addLogEntry=function(authResult){
-        var log=new Log({
+        var LogModel=db.models.log;
+        var log=new LogModel({
             subject:"Authentication",
             entry: "Successfully logged in",
             userId:authResult.user.id,
         });
         log.id=guid.create().value;
-        db.collection("logs").save(log,function(err,result){
+        log.save(function(err,result){
             if(result){
                 authResult.log=result;
                 self.emit('log-created',authResult)
@@ -90,15 +90,10 @@ var Authentication = function(db){
         self.emit('authenticated',authResult);
         self.emit('completed',authResult);
         if(continueWith){
-            var response={
-                success:authResult.success,
-                message:authResult.message,
-                user:{
-                    custom_data:authResult.user.custom_data,
-                    userId:authResult.user.id
-                }
-            }
-            continueWith(null,response)
+            authResult.user.hashedPassword=null; //don't send the hashed password
+            delete authResult.log; //don't send the hashed password
+            delete authResult.creds; //don't send the hashed password
+            continueWith(null,authResult)
         }
     };
 

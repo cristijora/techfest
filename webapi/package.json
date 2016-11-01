@@ -19,6 +19,8 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "membership": "file:../membership",
+    "database": "file:../database",
+    "data-tracking": "file:../data-tracking",
     "mongodb": "^2.2.10",
     "morgan": "^1.7.0",
     "request": "^2.75.0"
