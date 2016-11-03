@@ -15,14 +15,19 @@
     "description": {
       "type": "string"
     },
+    "customerId": {
+      "type": "string",
+      "required": true
+    },
     "createdAt": {
-      "type": "date"
+      "type": "date",
+      "defaultFn": "now"
     }
   },
   "validations": [],
   "relations": {
-    "userId": {
-      "type": "hasOne",
+    "customer": {
+      "type": "belongsTo",
       "model": "customer",
       "foreignKey": ""
     }

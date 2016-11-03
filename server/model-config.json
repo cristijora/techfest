@@ -50,5 +50,13 @@
   "event": {
     "dataSource": "db",
     "public": true
+  },
+  "potty": {
+    "dataSource": "db",
+    "public": true
+  },
+  "health": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -11,15 +11,19 @@
       "type": "number",
       "required": true
     },
+    "customerId": {
+      "type": "string",
+      "required": true
+    },
     "createdAt": {
       "type": "date",
-      "required": false
+      "defaultFn": "now"
     }
   },
   "validations": [],
   "relations": {
-    "userId": {
-      "type": "hasOne",
+    "customer": {
+      "type": "belongsTo",
       "model": "customer",
       "foreignKey": ""
     }

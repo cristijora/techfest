@@ -6,7 +6,8 @@
     "lint": "eslint .",
     "start": "node .",
     "posttest": "npm run lint && nsp check",
-    "dev": "babel-watch server/server.js"
+    "dev": "babel-watch server/server.js",
+    "prod": "npm install && npm start"
   },
   "dependencies": {
     "compression": "^1.0.3",

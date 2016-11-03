@@ -1,6 +1,5 @@
 {
-  "name": "event",
-  "plural": "events",
+  "name": "potty",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -11,30 +10,16 @@
       "type": "string",
       "required": true
     },
-    "type": {
-      "type": "string",
-      "required": true,
-      "default": "default"
-    },
-    "start": {
-      "type": "date",
-      "required": true
-    },
-    "end": {
-      "type": "date"
-    },
-    "allDay": {
-      "type": "boolean",
-      "default": false
+    "description": {
+      "type": "string"
     },
     "createdAt": {
-      "type": "date",
-      "defaultFn": "now"
+      "type": "date"
     },
-    "dow": {
-      "type": [
-        "number"
-      ]
+    "confirmed": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     },
     "customerId": {
       "type": "string",

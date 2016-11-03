@@ -72,7 +72,23 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "behaviours": {
+      "type": "hasMany",
+      "model": "behaviour",
+      "foreignKey": ""
+    },
+    "moods": {
+      "type": "hasMany",
+      "model": "mood",
+      "foreignKey": ""
+    },
+    "events": {
+      "type": "hasMany",
+      "model": "event",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }
