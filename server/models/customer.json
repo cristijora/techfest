@@ -1,0 +1,94 @@
+{
+  "name": "customer",
+  "plural": "customers",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "settings": {
+      "type": [
+        "object"
+      ],
+      "required": true,
+      "default": [
+        {
+          "checked": false,
+          "name": "Calendar View & Calendar data to track"
+        },
+        {
+          "checked": false,
+          "name": "Mood data"
+        },
+        {
+          "checked": false,
+          "name": "Wristband data "
+        },
+        {
+          "checked": false,
+          "name": "Medication data "
+        },
+        {
+          "checked": false,
+          "name": "Weather data "
+        },
+        {
+          "checked": false,
+          "name": "Socialization data "
+        },
+        {
+          "checked": false,
+          "name": "Food data "
+        },
+        {
+          "checked": false,
+          "name": "Potty training data "
+        },
+        {
+          "checked": false,
+          "name": "Health data "
+        },
+        {
+          "checked": false,
+          "name": "Behavior data "
+        },
+        {
+          "checked": false,
+          "name": "Sensory arousal data"
+        },
+        {
+          "checked": false,
+          "name": "Fluids data "
+        },
+        {
+          "checked": false,
+          "name": "Supplements data "
+        }
+      ]
+    },
+    "custom_data": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "behaviours": {
+      "type": "hasMany",
+      "model": "behaviour",
+      "foreignKey": ""
+    },
+    "moods": {
+      "type": "hasMany",
+      "model": "mood",
+      "foreignKey": ""
+    },
+    "events": {
+      "type": "hasMany",
+      "model": "event",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,7 @@
+{
+  "db": {
+    "database": "kairy",
+    "name": "db",
+    "connector": "mongodb"
+  }
+}
