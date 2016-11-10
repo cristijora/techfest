@@ -16,6 +16,18 @@
       "type": "number",
       "required": true,
       "default": 0
+    },
+    "senderId": {
+      "type": "string",
+      "required": true
+    },
+    "receiverId": {
+      "type": "string",
+      "required": true
+    },
+    "createdAt": {
+      "type": "date",
+      "defaultFn": "now"
     }
   },
   "validations": [],
@@ -23,7 +35,7 @@
     "sender": {
       "type": "belongsTo",
       "model": "customer",
-      "foreignKey": ""
+      "foreignKey": "senderId"
     },
     "receiver": {
       "type": "belongsTo",
