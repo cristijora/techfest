@@ -8,6 +8,10 @@
       "normalizeHttpPath": false,
       "xml": false
     },
+    "errorHandler": {
+      "debug": true,
+      "log": false
+    },
     "json": {
       "strict": false,
       "limit": "100kb"
