@@ -1,7 +1,6 @@
 {
   "db": {
-    "database": "kairy",
-    "name": "db",
-    "connector": "mongodb"
+    "connector": "mongodb",
+    "url":"mongodb://cristian.jora:techfest@ds057806.mlab.com:57806/heroku_xcj1nzx9"
   }
 }

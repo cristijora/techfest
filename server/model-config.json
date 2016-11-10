@@ -35,27 +35,15 @@
     "dataSource": "db",
     "public": false
   },
-  "mood": {
-    "dataSource": "db",
-    "public": true
-  },
   "customer": {
     "dataSource": "db",
     "public": true
   },
-  "behaviour": {
+  "payment": {
     "dataSource": "db",
     "public": true
   },
-  "event": {
-    "dataSource": "db",
-    "public": true
-  },
-  "potty": {
-    "dataSource": "db",
-    "public": true
-  },
-  "health": {
+  "category": {
     "dataSource": "db",
     "public": true
   }

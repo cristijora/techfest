@@ -1,7 +1,6 @@
 {
   "db": {
-    "database": "test2",
-    "name": "db",
-    "connector": "mongodb"
+    "connector": "mongodb",
+    "url":"mongodb://cristian.jora:techfest2016@ds057806.mlab.com:57806/heroku_xcj1nzx9"
   }
 }
