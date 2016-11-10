@@ -8,42 +8,41 @@ module.exports = function (Payment) {
     var senderId = ctx.instance.senderId;
     var receiverId = ctx.instance.receiverId;
     if (!senderId || !receiverId) {
+      console.log(ctx.res)
       next(getError("No sender or receiver provided!"));
     }
     customerModel.findById(senderId, function (err, sender) {
-      if (err) {
-        next(getError(err));
-      }
-      else {
-        findReceiverAndUpdateBalances(sender);
-      }
-    })
+      treatError(err,sender);
+      findReceiverAndUpdateBalances(sender);
+    });
     function findReceiverAndUpdateBalances(sender) {
       customerModel.findById(receiverId, function (err, receiver) {
-        treatError(err)
+        treatError(err,receiver)
         receiver.balance -= ctx.instance.amount;
         sender.balance += ctx.instance.amount;
         sender.save(function (err, result) {
-          treatError(err)
+          treatError(err,result)
           receiver.save(function (err, result) {
-            treatError(err);
+            treatError(err,result)
             user=sender;
             receiver=receiver;
             next();
           })
         })
-
       })
     }
-
-    function treatError(err) {
+    function treatError(err,result) {
       if (err) {
         next(getError(err));
       }
+      if(!result || result==null){
+        next(getError("Could find one or more entities"))
+      }
     }
-  })
+    next();
+  });
   Payment.observe('after save',function updateBalances(ctx, next){
-      console.log(ctx.instance);
+      console.log(ctx.instance,"after saveeee");
       ctx.instance.user=user;
       next();
   })
