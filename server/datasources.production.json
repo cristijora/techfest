@@ -1,6 +1,6 @@
 {
   "db": {
     "connector": "mongodb",
-    "url":"mongodb://cristian.jora:techfest@ds057806.mlab.com:57806/heroku_xcj1nzx9"
+    "url":"mongodb://cristian.jora:techfest2016@ds057806.mlab.com:57806/heroku_xcj1nzx9"
   }
 }
