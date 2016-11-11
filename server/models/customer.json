@@ -18,9 +18,9 @@
     "balance": {
       "type": "number",
       "required": true,
-      "default":0
+      "default": 0
     },
-    "image":{
+    "image": {
       "type": "string",
       "required": true
     }
@@ -28,6 +28,11 @@
   "validations": [],
   "relations": {
     "payments": {
+      "type": "hasMany",
+      "model": "customer",
+      "foreignKey": ""
+    },
+    "challenges":{
       "type": "hasMany",
       "model": "customer",
       "foreignKey": ""

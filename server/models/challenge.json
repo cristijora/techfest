@@ -1,0 +1,53 @@
+{
+  "name": "challenge",
+  "plural": "challenges",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "userId": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "progress": {
+      "type": "number",
+      "required": true,
+      "default": 0,
+      "min":0,
+      "max":100
+    },
+    "level":{
+      "type":"number",
+      "required":true,
+      "default":1,
+      "min":1,
+      "max":5
+    },
+    "createdAt": {
+      "type": "date",
+      "defaultFn": "now"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "customer",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

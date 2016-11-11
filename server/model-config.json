@@ -46,5 +46,9 @@
   "category": {
     "dataSource": "db",
     "public": true
+  },
+  "challenge": {
+    "dataSource": "db",
+    "public": true
   }
 }
