@@ -25,9 +25,14 @@
       "type": "string",
       "required": true
     },
-    "createdAt": {
+    "date": {
       "type": "date",
       "defaultFn": "now"
+    },
+    "category":{
+      "type":"string",
+      "required":true,
+      "default":""
     }
   },
   "validations": [],
