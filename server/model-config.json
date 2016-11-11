@@ -50,5 +50,9 @@
   "challenge": {
     "dataSource": "db",
     "public": true
+  },
+  "product": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -45,6 +45,7 @@ module.exports = function (Payment) {
   });
   Payment.observe('after save',function updateBalances(ctx, next){
       ctx.instance.user=user;
+      ctx.Model.app.io.emit("payment",ctx);
       next();
   })
   function getError(message) {

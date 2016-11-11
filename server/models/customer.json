@@ -29,13 +29,18 @@
   "relations": {
     "payments": {
       "type": "hasMany",
-      "model": "customer",
-      "foreignKey": ""
+      "model": "payment",
+      "foreignKey": "senderId"
     },
     "challenges":{
       "type": "hasMany",
-      "model": "customer",
-      "foreignKey": ""
+      "model": "challenge",
+      "foreignKey": "userId"
+    },
+    "products":{
+      "type": "hasMany",
+      "model": "product",
+      "foreignKey": "userId"
     }
   },
   "acls": [],

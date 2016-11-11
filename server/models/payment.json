@@ -25,6 +25,9 @@
       "type": "string",
       "required": true
     },
+    "products": {
+      "type": "array"
+    },
     "date": {
       "type": "date",
       "defaultFn": "now"
