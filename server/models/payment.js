@@ -2,7 +2,7 @@
 var ObjectId = require('mongodb').ObjectID;
 var getMail=require('./../assets/server')
 module.exports = function (Payment) {
-  var user=null,receiver = null
+  var user=null,receiverUser = null
     Payment.sendEmail = function(payment,cb) {
       getMail(payment,function(html){
         Payment.app.models.Email.send({
@@ -42,7 +42,7 @@ module.exports = function (Payment) {
           receiver.save(function (err, result) {
             treatError(err,result)
             user=sender;
-            receiver=receiver;
+            receiverUser=receiver;
             next();
           })
         })
@@ -67,6 +67,7 @@ module.exports = function (Payment) {
         productModel.find({where:{or:productIds}},function(err,result){
           treatError(err,result);
           payment.products=result;
+          payment.receiver=receiverUser;
           Payment.sendEmail(payment,function(err){
             console.log(err);
           });
@@ -96,6 +97,7 @@ module.exports = function (Payment) {
     console.log(result.length);
     var length=result.length;
     var nrOfCallbacks=0;
+    if(length==0) next();
     result.forEach(function(payment){
 
       if(payment.products){

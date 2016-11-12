@@ -51,6 +51,9 @@
     width: 40% !important;
     height: auto !important;
   }
+  a[href]{
+   text-decoration:none;
+  }
 }
 .table_width_100 {
   width: 680px;
@@ -78,9 +81,12 @@
         <!-- padding --><div style="height: 40px; line-height: 40px; font-size: 10px;">&nbsp;</div>
         <table width="90%" border="0" cellspacing="0" cellpadding="0">
           <tr><td align="center">
-            <a href="#" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
-              <font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3" color="#596167">
-                <img :src="payment.sender.image" height="19" alt="Metronic" border="0" style="display: block;" /></font></a>
+            <a href="#" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px; display:inline-block; text-decoration:none;">
+              <font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3">
+                Hey  <span style="color:#54b07d"><strong>{{payment.sender.firstName}}</strong></span> 
+               
+                </font></a>
+                
           </td>
           </tr>
         </table>
@@ -92,9 +98,14 @@
       <tr><td align="center" bgcolor="#ffffff">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr><td align="center">
-            <a href="#" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">
-              <font face="Arial, Helvetica, sans-seri; font-size: 13px;" size="3" color="#596167">
-                <img src="http://artloglab.com/metromail-shop/images/promo.jpg" width="680" alt="Promo" border="0" style="display: block; width: 100%; height: auto;" /></font></a>
+          
+            <a href="#" target="_blank" style="color: #596167; font-family: Arial, Helvetica, sans-serif; font-size: 13px; display:inline-block; text-decoration:none;">
+            <font face="Arial, Helvetica, sans-serif" size="5" color="#727272" style="font-size:18px">
+            You just bought products from 
+                <img :src="payment.receiver.image" width="30" alt="Promo" border="0" style="display: inline-block; height: 100; vertical-align:middle;" />
+                <strong style="font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:18px;color:#727272">
+             {{payment.receiver.firstName}} {{payment.receiver.lastName}}</strong>
+                </font></a>
           </td>
           </tr>
         </table>
@@ -110,9 +121,9 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr><td align="center">
                 <font face="Arial, Helvetica, sans-serif" size="5" color="#57697e" style="font-size: 22px;">
-  <span style="font-family: Arial, Helvetica, sans-serif; font-size: 22px; color: #57697e; text-transform: uppercase;">
-  Your products
-</span></font>
+          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 22px; color: #57697e;">
+          Here is the list of your products:
+        </span></font>
                 <!-- padding --><div style="height: 40px; line-height: 40px; font-size: 10px;">&nbsp;</div>
               </td></tr>
             </table>
@@ -152,6 +163,10 @@
 
               </td></tr>
             </table>
+            <font face="Arial, Helvetica, sans-serif" size="5" color="#727272" style="font-size:18px">
+            Total:
+            <strong style="font-family:Tahoma,Arial,Helvetica,sans-serif;font-size:18px;color:#727272">
+             {{payment.amount}} Lei</strong></font>
           </td></tr>
           <tr><td><!-- padding --><div style="height: 10px; line-height: 10px; font-size: 10px;">&nbsp;</div></td></tr>
         </table>
