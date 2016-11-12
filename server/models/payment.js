@@ -75,9 +75,41 @@ module.exports = function (Payment) {
     err.status=400;
     return err;
   }
-/*  Payment.afterRemote('find',function(ctx,result,next){
-    var productIds = payment.products.map(function(idval) { return {id:idval}; });
-    productModel.find({where:{or:productIds}},function(err,result){
-  })*/
+  Payment.afterRemote('find',function(ctx,result,next){
+    console.log(result.length);
+    var length=result.length;
+    var nrOfCallbacks=0;
+    result.forEach(function(payment){
 
+      if(payment.products){
+        var productModel=Payment.app.models.product;
+        var productIds = payment.products.map(function(idval) { return {id:idval}; });
+        productModel.find({where:{or:productIds}},function(err,products){
+          nrOfCallbacks++;
+          if(err){
+            treatError(err,products);
+          }
+          payment.products=products;
+          if(nrOfCallbacks==length){
+            console.log("Done")
+            next();
+          }
+        })
+      }else{
+        nrOfCallbacks++;
+      }
+      if(nrOfCallbacks==length){
+        console.log("Done")
+        next();
+      }
+    })
+    function treatError(err,result) {
+      if (err) {
+        return next(getError(err));
+      }
+      if(!result || result==null){
+        return next(getError("Could find one or more entities"))
+      }
+    }
+  })
 };
