@@ -17,7 +17,7 @@
     "payments": {
       "type": "hasAndBelongsToMany",
       "model": "payment",
-      "foreignKey": ""
+      "foreignKey": "paymentId"
     }
   },
   "acls": [],

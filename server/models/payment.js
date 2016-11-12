@@ -1,5 +1,5 @@
 'use strict';
-
+var ObjectId = require('mongodb').ObjectID;
 module.exports = function (Payment) {
   var user=null,receiver=null
   Payment.observe('before save', function updateBalances(ctx, next) {
@@ -10,7 +10,6 @@ module.exports = function (Payment) {
     if (!senderId || !receiverId) {
       return next(getError("No sender or receiver provided!"));
     }
-
     customerModel.findById(senderId, function (err, sender) {
       treatError(err,sender);
       findReceiverAndUpdateBalances(sender);
@@ -21,8 +20,8 @@ module.exports = function (Payment) {
         if(!receiver || !sender){
           return next(getError("No sender or receiver provided!"));
         }
-        receiver.balance -= ctx.instance.amount;
-        sender.balance += ctx.instance.amount;
+        receiver.balance += ctx.instance.amount;
+        sender.balance -= ctx.instance.amount;
         sender.save(function (err, result) {
           treatError(err,result)
           receiver.save(function (err, result) {
@@ -45,13 +44,15 @@ module.exports = function (Payment) {
   });
   Payment.observe('after save',function updateBalances(ctx, next){
       var payment=JSON.parse(JSON.stringify(ctx.instance));
+      ctx.instance.user=user;
       payment.sender=user;
       if(payment.products){
         var productModel=ctx.Model.app.models.product;
-        productModel.find({'_id': { $in: payment.products}},function(err,result){
+        var productIds = payment.products.map(function(idval) { return {id:idval}; });
+        productModel.find({where:{or:productIds}},function(err,result){
+          console.log(err,result);
           treatError(err,result);
           payment.products=result;
-          console.log(payment)
           ctx.Model.app.io.emit("payment",payment);
         })
       }
@@ -74,6 +75,9 @@ module.exports = function (Payment) {
     err.status=400;
     return err;
   }
-
+/*  Payment.afterRemote('find',function(ctx,result,next){
+    var productIds = payment.products.map(function(idval) { return {id:idval}; });
+    productModel.find({where:{or:productIds}},function(err,result){
+  })*/
 
 };

@@ -54,6 +54,11 @@
       "type": "hasMany",
       "model": "category",
       "foreignKey": ""
+    },
+    "productObjects":{
+      "type": "hasMany",
+      "model": "product",
+      "foreignKey": "products"
     }
   },
   "acls": [],
