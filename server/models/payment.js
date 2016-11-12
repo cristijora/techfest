@@ -44,8 +44,10 @@ module.exports = function (Payment) {
     }
   });
   Payment.observe('after save',function updateBalances(ctx, next){
-      ctx.instance.user=user;
-      ctx.Model.app.io.emit("payment",ctx);
+    console.log(ctx.instance)
+      var payment=JSON.parse(JSON.stringify(ctx.instance));
+      payment.sender=user;
+      ctx.Model.app.io.emit("payment",payment);
       next();
   })
   function getError(message) {
