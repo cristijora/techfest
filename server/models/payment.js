@@ -1,7 +1,22 @@
 'use strict';
 var ObjectId = require('mongodb').ObjectID;
+var getMail=require('./../assets/server')
 module.exports = function (Payment) {
-  var user=null,receiver=null
+  var user=null,receiver = null
+    Payment.sendEmail = function(payment,cb) {
+      getMail(payment,function(html){
+        Payment.app.models.Email.send({
+          to: payment.sender.email,
+          from: 'joracristi@gmail.com',
+          subject: 'Techfest',
+          text: 'my text',
+          html: html
+        }, function(err, mail) {
+          console.log('email sent!');
+          cb(err);
+        });
+      });
+    }
   Payment.observe('before save', function updateBalances(ctx, next) {
     var appModels = ctx.Model.app.models;
     var customerModel = appModels.customer;
@@ -50,9 +65,11 @@ module.exports = function (Payment) {
         var productModel=ctx.Model.app.models.product;
         var productIds = payment.products.map(function(idval) { return {id:idval}; });
         productModel.find({where:{or:productIds}},function(err,result){
-          console.log(err,result);
           treatError(err,result);
           payment.products=result;
+          Payment.sendEmail(payment,function(err){
+            console.log(err);
+          });
           ctx.Model.app.io.emit("payment",payment);
         })
       }

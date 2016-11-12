@@ -54,5 +54,8 @@
   "product": {
     "dataSource": "db",
     "public": true
+  },
+  "Email": {
+    "dataSource": "gmailDatasource"
   }
 }

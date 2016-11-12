@@ -3,5 +3,19 @@
     "url": "mongodb://cristian.jora:techfest2016@ds057806.mlab.com:57806/heroku_xcj1nzx9",
     "name": "db",
     "connector": "mongodb"
+  },
+  "gmailDatasource": {
+    "name": "mail",
+    "connector": "mail",
+    "transports": [{
+      "type": "SMTP",
+      "host": "smtp.gmail.com",
+      "secure": true,
+      "port": 465,
+      "auth": {
+        "user": "joracristi@gmail.com",
+        "pass": "tszuywwcjphzaoey"
+      }
+    }]
   }
 }
