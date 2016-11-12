@@ -44,11 +44,30 @@ module.exports = function (Payment) {
     }
   });
   Payment.observe('after save',function updateBalances(ctx, next){
-    console.log(ctx.instance)
       var payment=JSON.parse(JSON.stringify(ctx.instance));
       payment.sender=user;
-      ctx.Model.app.io.emit("payment",payment);
+      if(payment.products){
+        var productModel=ctx.Model.app.models.product;
+        productModel.find({'_id': { $in: payment.products}},function(err,result){
+          treatError(err,result);
+          payment.products=result;
+          console.log(payment)
+          ctx.Model.app.io.emit("payment",payment);
+        })
+      }
+      else{
+        ctx.Model.app.io.emit("payment",payment);
+      }
       next();
+
+    function treatError(err,result) {
+      if (err) {
+        return next(getError(err));
+      }
+      if(!result || result==null){
+        return next(getError("Could find one or more entities"))
+      }
+    }
   })
   function getError(message) {
     var err=new Error(message);
